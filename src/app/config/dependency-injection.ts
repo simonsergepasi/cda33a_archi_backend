@@ -1,13 +1,13 @@
-import { asClass, asFunction, asValue, createContainer } from "awilix";
+import { asClass, asValue, createContainer } from "awilix";
+import { IAuthenticator } from "../../interfaces/authenticator.interface";
+import { IConferenceRepository } from "../../interfaces/conference-repository.interface";
+import { IIDGenerator } from "../../interfaces/id-generator.interface";
+import { IUserRepository } from "../../interfaces/user-repository.interface";
 import { InMemoryConferenceRepository } from "../../repositories/in-memory-conference.repository";
 import { InMemoryUserRepository } from "../../repositories/in-memory-user-repository";
-import { UUIDGenerator } from "../../utils/uuid-generator";
 import { BasicAuthenticator } from "../../services/basic-authenticator";
 import { OrganizeConference } from "../../usecases/organize-conference.usecase";
-import { IConferenceRepository } from "../../interfaces/conference-repository.interface";
-import { IUserRepository } from "../../interfaces/user-repository.interface";
-import { IIDGenerator } from "../../interfaces/id-generator.interface";
-import { IAuthenticator } from "../../interfaces/authenticator.interface";
+import { UUIDGenerator } from "../../utils/uuid-generator";
 
 interface Dependencies {
     conferenceRepository: IConferenceRepository

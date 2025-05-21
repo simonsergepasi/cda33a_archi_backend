@@ -1,19 +1,17 @@
-// Test unitaire: il test les regles metiers
-// test e2e (bout a bout) : requet -> controller -> usecase -> response
-import { addDays, addHours } from 'date-fns'
-import request from 'supertest'
-import app from '../../app/app'
-import container from '../../app/config/dependency-injection'
-import { User } from '../../entities/user.entity'
-import { IUserRepository } from '../../interfaces/user-repository.interface'
+import { addDays, addHours } from 'date-fns';
+import request from 'supertest';
+import app from '../../app/app';
+import container from '../../app/config/dependency-injection';
+import { User } from '../../entities/user.entity';
+import { IUserRepository } from '../../interfaces/user-repository.interface';
 
 describe("Usecase: Organize conference", () => {
-    const johnDoe = new User({id: "john-doe", email: 'johndoe@gmail.com', password: 'qwerty'})
-    let userRepository: IUserRepository
+    const johnDoe = new User({id: "john-doe", email: 'johndoe@gmail.com', password: 'qwerty'});
+    let userRepository: IUserRepository;
 
     beforeEach(async () => {
-        userRepository = container.resolve('userRepository')
-        userRepository.save(johnDoe)
+        userRepository = container.resolve('userRepository');
+        userRepository.save(johnDoe);
     })
 
     it("should organize a conference", async () => {
