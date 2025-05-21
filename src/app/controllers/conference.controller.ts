@@ -16,7 +16,7 @@ export const organizeConference = async (req: Request, res: Response, next: Next
         if(errors) return res.jsonError(errors, 400)
 
         const id = await usecase.execute({
-            user: new User({id: "john-doe"}),
+            user: new User({id: "john-doe", email: 'johndoe@gmail.com', password: 'qwerty'}),
             title: input.title,
             seats: input.seats,
             startDate: input.startDate,

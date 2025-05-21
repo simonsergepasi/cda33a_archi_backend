@@ -7,7 +7,7 @@ import { OrganizeConference } from "./organize-conference.usecase";
 import { User } from "../entities/user.entity";
 
 describe("Organize conference", () => {
-    const johnDoe = new User({id: "john-doe"})
+    const johnDoe = new User({id: "john-doe", email: 'johndoe@gmail.com', password: 'qwerty'})
 
     let usecase: OrganizeConference;
     let repository: InMemoryConferenceRepository
