@@ -1,11 +1,10 @@
 ### Create conference
-POST http://localhost:8000/conference
+POST http://localhost:8000/conferences
 Content-Type: application/json
-Authorization: Basic am9obi5kb2VAZ21haWwuY29tOnF3ZXJ0eQ==
 
 {
     "title": "Ma nouvelle conference",
-    "seats": 100,
-    "startDate": "2025-04-21T10:00:00.000Z",
-    "endDate": "2025-04-21T12:00:00.000Z"
+    "seats": 50,
+    "startDate": "2025-05-25T10:00:00.000Z",
+    "endDate": "2025-05-25T12:00:00.000Z"
 }

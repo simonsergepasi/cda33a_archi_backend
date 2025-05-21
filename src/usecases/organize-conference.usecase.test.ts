@@ -4,8 +4,11 @@ import { addDays, addHours } from "date-fns";
 import { InMemoryConferenceRepository } from "../repositories/in-memory-conference.repository";
 import { FixedIDGenerator } from "../utils/fixed-id-generator";
 import { OrganizeConference } from "./organize-conference.usecase";
+import { User } from "../entities/user.entity";
 
 describe("Organize conference", () => {
+    const johnDoe = new User({id: "john-doe"})
+
     let usecase: OrganizeConference;
     let repository: InMemoryConferenceRepository
     let idGenerator : FixedIDGenerator
@@ -18,6 +21,7 @@ describe("Organize conference", () => {
 
     describe("Scenario: Conference is too soon", () => {
         const payload = {
+                user: johnDoe,
                 title: "Python pour les nuls",
                 seats: 100,
                 startDate: new Date('2025-01-01T00:00:00.000Z'),
@@ -30,6 +34,7 @@ describe("Organize conference", () => {
 
     describe("Scenario: Conference has not enough seats", () => {
         const payload = {
+                user: johnDoe,
                 title: "Python pour les nuls",
                 seats: 10,
                 startDate: addDays(new Date(), 4),
@@ -43,6 +48,7 @@ describe("Organize conference", () => {
 
     describe("Scenario: Conference has too much seats", () => {
         const payload = {
+                user: johnDoe,
                 title: "Python pour les nuls",
                 seats: 150,
                 startDate: addDays(new Date(), 4),
@@ -56,6 +62,7 @@ describe("Organize conference", () => {
 
     describe("Scenario: Conference is too long", () => {
         const payload = {
+                user: johnDoe,
                 title: "Python pour les nuls",
                 seats: 50,
                 startDate: addDays(new Date(), 4),
@@ -69,6 +76,7 @@ describe("Organize conference", () => {
 
     describe("Scenario: Happy path", () => {
         const payload = {
+                user: johnDoe,
                 title: "Python pour les nuls",
                 seats: 50,
                 startDate: addDays(new Date(), 4),

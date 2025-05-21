@@ -1,4 +1,5 @@
 import { Conference } from "../entities/conference.entity"
+import { User } from "../entities/user.entity"
 import { IConferenceRepository } from "../interfaces/conference-repository.interface"
 import { IIDGenerator } from "../interfaces/id-generator.interface"
 
@@ -7,6 +8,7 @@ export interface RequestPayload {
     seats: number
     startDate: Date
     endDate: Date
+    user: User
 }
 
 export class OrganizeConference {
@@ -23,7 +25,8 @@ export class OrganizeConference {
             title: payload.title,
             seats: payload.seats,
             startDate: payload.startDate,
-            endDate: payload.endDate
+            endDate: payload.endDate,
+            organizerId: payload.user.props.id
         })
 
         conference.validateOrThrow();

@@ -6,6 +6,7 @@ export interface ConferenceProps {
     seats: number
     startDate: Date
     endDate: Date
+    organizerId: string
 }
 
 export class Conference {
