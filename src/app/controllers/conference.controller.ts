@@ -13,7 +13,7 @@ const usecase = new OrganizeConference(conferenceRepository, idGenerator);
 export const organizeConference = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {errors, input} = await RequestValidator(CreateConferenceDTO, req.body);
-        if(errors) return res.status(400).json({errors})
+        if(errors) return res.jsonError(errors, 400)
 
         const id = await usecase.execute({
             user: new User({id: "john-doe"}),
@@ -23,7 +23,7 @@ export const organizeConference = async (req: Request, res: Response, next: Next
             endDate: input.endDate
         });
 
-        return res.status(201).json({ id });
+        return res.jsonSuccess({ id }, 201)
     } catch (error) {
         next(error)
     }

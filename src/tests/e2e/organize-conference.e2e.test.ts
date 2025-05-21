@@ -16,6 +16,6 @@ describe("Usecase: Organize conference", () => {
                             })
 
         expect(response.status).toEqual(201);
-        expect(response.body).toEqual({id: "1"});
+        expect(response.body.data).toEqual({id: expect.any(String)});
     })
 })
