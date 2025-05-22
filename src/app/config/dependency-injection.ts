@@ -5,10 +5,11 @@ import { IIDGenerator } from "../../interfaces/id-generator.interface";
 import { IUserRepository } from "../../interfaces/user-repository.interface";
 import { InMemoryConferenceRepository } from "../../repositories/in-memory-conference.repository";
 import { MongoUserRepository } from "../../repositories/mongodb/mongo-user-repository";
-import { BasicAuthenticator } from "../../services/basic-authenticator";
+import { MongoUser } from "../../repositories/mongodb/mongo-user.model";
+import { JwtAuthenticator } from "../../services/jwt-authenticator";
 import { OrganizeConference } from "../../usecases/organize-conference.usecase";
 import { UUIDGenerator } from "../../utils/uuid-generator";
-import { MongoUser } from "../../repositories/mongodb/mongo-user.model";
+import { config } from "./get-env";
 
 export interface Dependencies {
     conferenceRepository: IConferenceRepository
@@ -33,7 +34,7 @@ const idGenerator = container.resolve('idGenerator');
 
 
 container.register({
-    authenticator: asValue(new BasicAuthenticator(userRepository)),
+    authenticator: asValue(new JwtAuthenticator(userRepository, config.secretKey)),
     organizeConference: asValue(new OrganizeConference(conferenceRepository, idGenerator))
 })
 

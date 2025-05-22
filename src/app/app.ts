@@ -2,6 +2,8 @@ import express from 'express';
 import { errorHandlerMiddleware } from './middlewares/error-handler.middleware';
 import { jsonReponseMiddleware } from './middlewares/json-response.middleware';
 import { ConferenceRoute } from './routes/conference.routes';
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express();
 

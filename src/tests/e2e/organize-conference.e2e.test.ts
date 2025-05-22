@@ -23,7 +23,7 @@ describe("Usecase: Organize conference", () => {
     it("should organize a conference", async () => {
         const response = await request(app)
                             .post("/conferences")
-                            .set('Authorization', E2eUsers.john.createBasicAuthorization())
+                            .set('Authorization', E2eUsers.john.createJwtAuthorization())
                             .send({
                                 title: "My first conference",
                                 seats: 50,

@@ -1,11 +1,12 @@
 import express, { Application } from "express";
+import mongoose from "mongoose";
+import container from "../app/config/dependency-injection";
+import { config } from "../app/config/get-env";
+import { errorHandlerMiddleware } from "../app/middlewares/error-handler.middleware";
 import { jsonReponseMiddleware } from "../app/middlewares/json-response.middleware";
 import { ConferenceRoute } from "../app/routes/conference.routes";
-import { errorHandlerMiddleware } from "../app/middlewares/error-handler.middleware";
-import { IFixture } from "./fixtures/fixture.interface";
 import { Container } from "../types/container.type";
-import container from "../app/config/dependency-injection";
-import mongoose from "mongoose";
+import { IFixture } from "./fixtures/fixture.interface";
 
 export class TestApp {
     private app : Application
@@ -17,7 +18,7 @@ export class TestApp {
     }
 
     async setup() {
-        await mongoose.connect('mongodb://admin:qwerty@localhost:3702/conferences?authSource=admin');
+        await mongoose.connect(config.dbUrl);
         await mongoose.connection.db?.collection('users').deleteMany({});
 
         this.app.use(express.json());

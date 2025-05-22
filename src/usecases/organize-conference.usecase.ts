@@ -2,8 +2,9 @@ import { Conference } from "../entities/conference.entity"
 import { User } from "../entities/user.entity"
 import { IConferenceRepository } from "../interfaces/conference-repository.interface"
 import { IIDGenerator } from "../interfaces/id-generator.interface"
+import { IUsecase } from "../interfaces/usecase.interface"
 
-export interface RequestPayload {
+interface RequestPayload {
     title: string
     seats: number
     startDate: Date
@@ -11,13 +12,15 @@ export interface RequestPayload {
     user: User
 }
 
-export class OrganizeConference {
+type ResponsePayload = string;
+
+export class OrganizeConference implements IUsecase<RequestPayload, ResponsePayload> {
     constructor(
         private readonly conferenceRepository: IConferenceRepository,
         private readonly idGenerator: IIDGenerator
     ) {}
 
-    async execute(payload: RequestPayload) {
+    async execute(payload: RequestPayload): Promise<ResponsePayload> {
         const id = this.idGenerator.generate()
 
         const conference = new Conference({
