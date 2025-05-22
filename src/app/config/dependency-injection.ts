@@ -9,7 +9,7 @@ import { BasicAuthenticator } from "../../services/basic-authenticator";
 import { OrganizeConference } from "../../usecases/organize-conference.usecase";
 import { UUIDGenerator } from "../../utils/uuid-generator";
 
-interface Dependencies {
+export interface Dependencies {
     conferenceRepository: IConferenceRepository
     userRepository: IUserRepository
     idGenerator: IIDGenerator

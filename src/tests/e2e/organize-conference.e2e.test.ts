@@ -1,23 +1,25 @@
 import { addDays, addHours } from 'date-fns';
+import { Application } from 'express';
 import request from 'supertest';
-import app from '../../app/app';
-import container from '../../app/config/dependency-injection';
-import { User } from '../../entities/user.entity';
-import { IUserRepository } from '../../interfaces/user-repository.interface';
+import { E2eUsers } from '../seeds/e2e-users';
+import { TestApp } from '../test-app';
 
 describe("Usecase: Organize conference", () => {
-    const johnDoe = new User({id: "john-doe", email: 'johndoe@gmail.com', password: 'qwerty'});
-    let userRepository: IUserRepository;
+
+    let testApp: TestApp;
+    let app: Application
 
     beforeEach(async () => {
-        userRepository = container.resolve('userRepository');
-        userRepository.save(johnDoe);
+        testApp = new TestApp()
+        await testApp.setup()
+        app = testApp.expressApp
+        await testApp.loadFixtures([E2eUsers.alice])
     })
 
     it("should organize a conference", async () => {
         const response = await request(app)
                             .post("/conferences")
-                            .set('Authorization', 'Basic am9obmRvZUBnbWFpbC5jb206cXdlcnR5')
+                            .set('Authorization', E2eUsers.alice.createBasicAuthorization())
                             .send({
                                 title: "My first conference",
                                 seats: 50,
