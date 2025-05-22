@@ -23,4 +23,4 @@ export const E2eUsers = {
             password: 'qwerty'
         })
     ),
-}
+} 

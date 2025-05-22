@@ -1,4 +1,5 @@
 import { differenceInDays, differenceInHours } from "date-fns"
+import { User } from "./user.entity"
 
 export interface ConferenceProps {
     id: string
@@ -26,6 +27,14 @@ export class Conference {
 
     isTooLong() {
         return differenceInHours(this.props.endDate, this.props.startDate) > 3
+    }
+
+    isOrganizer(user: User) {
+        return this.props.organizerId === user.props.id
+    }
+
+    update(data: Partial<ConferenceProps>) {
+        this.props = { ...this.props, ...data }
     }
 
     validateOrThrow() {
