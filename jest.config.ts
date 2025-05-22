@@ -6,5 +6,7 @@ export default {
     coverageDirectory: '../coverage',
     coverageProvider: 'v8',
     moduleFileExtensions: ['js', 'json', 'ts', 'tsx'],
-    rootDir: 'src'
+    rootDir: 'src',
+    globalSetup: './tests/setup/global-setup.ts',
+    globalTeardown: './tests/setup/global-teardown.ts'
 };

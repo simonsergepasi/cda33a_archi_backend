@@ -13,13 +13,17 @@ describe("Usecase: Organize conference", () => {
         testApp = new TestApp()
         await testApp.setup()
         app = testApp.expressApp
-        await testApp.loadFixtures([E2eUsers.alice])
+        await testApp.loadFixtures([E2eUsers.john])
+    })
+
+    afterAll(async() => {
+        await testApp.teardown()
     })
 
     it("should organize a conference", async () => {
         const response = await request(app)
                             .post("/conferences")
-                            .set('Authorization', E2eUsers.alice.createBasicAuthorization())
+                            .set('Authorization', E2eUsers.john.createBasicAuthorization())
                             .send({
                                 title: "My first conference",
                                 seats: 50,

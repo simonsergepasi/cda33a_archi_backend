@@ -4,10 +4,11 @@ import { IConferenceRepository } from "../../interfaces/conference-repository.in
 import { IIDGenerator } from "../../interfaces/id-generator.interface";
 import { IUserRepository } from "../../interfaces/user-repository.interface";
 import { InMemoryConferenceRepository } from "../../repositories/in-memory-conference.repository";
-import { InMemoryUserRepository } from "../../repositories/in-memory-user-repository";
+import { MongoUserRepository } from "../../repositories/mongodb/mongo-user-repository";
 import { BasicAuthenticator } from "../../services/basic-authenticator";
 import { OrganizeConference } from "../../usecases/organize-conference.usecase";
 import { UUIDGenerator } from "../../utils/uuid-generator";
+import { MongoUser } from "../../repositories/mongodb/mongo-user.model";
 
 export interface Dependencies {
     conferenceRepository: IConferenceRepository
@@ -21,8 +22,9 @@ const container = createContainer<Dependencies>()
 
 container.register({
     conferenceRepository: asClass(InMemoryConferenceRepository).singleton(),
-    userRepository: asClass(InMemoryUserRepository).singleton(),
     idGenerator: asClass(UUIDGenerator).singleton(),
+    
+    userRepository: asValue(new MongoUserRepository(MongoUser.UserModel)),
 })
 
 const conferenceRepository = container.resolve('conferenceRepository');

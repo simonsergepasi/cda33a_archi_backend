@@ -9,15 +9,15 @@ services:
             TZ: Europe/Paris
         ports:
             - '3702:27017'
-    mongo-admin:
-        image: 'mongo-express'
-        environment:
-            ME_CONFIG_MONGODB_ADMINUSERNAME: admin
-            ME_CONFIG_MONGODB_ADMINPASSWORD: azerty
-            ME_CONFIG_MONGODB_PORT: 27017
-            ME_CONFIG_MONGODB_SERVER: mongo
-        depends_on:
-            - mongo
-        ports:
-            - '3703:8081'
-        restart: always
+    # mongo-admin:
+    #     image: 'mongo-express'
+    #     environment:
+    #         ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+    #         ME_CONFIG_MONGODB_ADMINPASSWORD: azerty
+    #         ME_CONFIG_MONGODB_PORT: 27017
+    #         ME_CONFIG_MONGODB_SERVER: mongo
+    #     depends_on:
+    #         - mongo
+    #     ports:
+    #         - '3703:8081'
+    #     restart: always

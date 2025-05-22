@@ -5,6 +5,7 @@ import { errorHandlerMiddleware } from "../app/middlewares/error-handler.middlew
 import { IFixture } from "./fixtures/fixture.interface";
 import { Container } from "../types/container.type";
 import container from "../app/config/dependency-injection";
+import mongoose from "mongoose";
 
 export class TestApp {
     private app : Application
@@ -16,11 +17,18 @@ export class TestApp {
     }
 
     async setup() {
+        await mongoose.connect('mongodb://admin:qwerty@localhost:3702/conferences?authSource=admin');
+        await mongoose.connection.db?.collection('users').deleteMany({});
+
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: true}));
         this.app.use(jsonReponseMiddleware);
         this.app.use(ConferenceRoute);
         this.app.use(errorHandlerMiddleware);
+    }
+
+    async teardown() {
+        await mongoose.connection.close();
     }
 
     async loadFixtures(fixtures: IFixture[]) {

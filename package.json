@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest",
     "test:e2e": "jest --config jest.config.e2e.ts",
     "start": "nodemon src/app/server.ts"
   },
