@@ -48,23 +48,27 @@ export const changeSeats = async (
     }
 };
 
-export const changeDates = async (req: Request, res: Response, next: NextFunction) : Promise<any> => {
-  try {
-    const { conferenceId } = req.params;
-    const {errors, input } = await RequestValidator(ChangeDatesDTO, req.body);
+export const changeDates = async (
+    req: Request, 
+    res: Response, 
+    next: NextFunction
+) : Promise<any> => {
+    try {
+        const { conferenceId } = req.params;
+        const { errors, input } = await RequestValidator(ChangeDatesDTO, req.body);
 
-    if(errors) return res.jsonError(errors, 400)
+        if(errors) return res.jsonError(errors, 400)
 
-    await container.resolve('changeDates').execute({
-        conferenceId,
-        startDate: new Date(input.newStartDate),
-        endDate: new Date(input.newEndDate),
-        organizer: req.user as User
-    })
+        await container.resolve('changeDates').execute({
+            conferenceId,
+            startDate: new Date(input.newStartDate),
+            endDate: new Date(input.newEndDate),
+            organizer: req.user as User
+        })
 
-    return res.jsonSuccess("Les dates ont bien ete mises a jour", 200)
+        return res.jsonSuccess("Les dates ont bien ete mises a jour", 200)
 
-} catch (error) {
-    next(error);
-}
+    } catch (error) {
+        next(error);
+    }
 }
