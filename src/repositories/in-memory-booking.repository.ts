@@ -15,4 +15,8 @@ export class InMemoryBookingRepository implements IBookingRepository {
     async getCountByConferenceId(conferenceId: string): Promise<number> {
         return this.bookings.filter(booking => booking.props.conferenceId === conferenceId).length
     }
+
+    async findByConferenceId(conferenceId: string): Promise<Booking[]> {
+        return this.bookings.filter(booking => booking.props.conferenceId === conferenceId)
+    }
 }
