@@ -15,4 +15,10 @@ export class InMemoryConferenceRepository implements IConferenceRepository {
     async save(conference: Conference) : Promise<void> {
         this.conferences.push(conference)
     }
+
+    async update(conference: Conference): Promise<void> {
+        const index = this.conferences.findIndex(c => c.props.id === conference.props.id);
+
+        this.conferences[index] = conference;
+    }
 }

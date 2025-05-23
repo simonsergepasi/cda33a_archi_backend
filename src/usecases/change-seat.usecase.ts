@@ -35,6 +35,8 @@ export class ChangeSeatUsecase implements IUsecase<RequestPayload, ResponsePaylo
 
         conference.update({ seats: data.seats });
 
-        conference.validateOrThrow()
+        conference.validateOrThrow();
+
+        this.conferenceRepository.update(conference)
     }
 }

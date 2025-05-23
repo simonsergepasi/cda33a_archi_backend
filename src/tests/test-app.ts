@@ -39,4 +39,8 @@ export class TestApp {
     get expressApp() {
         return this.app
     }
+
+    get containerDI() {
+        return this.container;
+    }
 }

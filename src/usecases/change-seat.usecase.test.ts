@@ -8,15 +8,15 @@ import { ChangeSeatUsecase } from "./change-seat.usecase";
 
 
 describe("Change seats", () => {
-    let confRepository: InMemoryConferenceRepository
-    let bookingRepository: InMemoryBookingRepository
-    let usecase: ChangeSeatUsecase
+    let confRepository: InMemoryConferenceRepository;
+    let bookingRepository: InMemoryBookingRepository;
+    let usecase: ChangeSeatUsecase;
 
     beforeEach(async () => {
-        confRepository = new InMemoryConferenceRepository()
-        bookingRepository = new InMemoryBookingRepository()
-        usecase = new ChangeSeatUsecase(confRepository, bookingRepository)
-        await confRepository.save(UnitConferences.conference2)
+        confRepository = new InMemoryConferenceRepository();
+        bookingRepository = new InMemoryBookingRepository();
+        usecase = new ChangeSeatUsecase(confRepository, bookingRepository);
+        await confRepository.save(UnitConferences.conference2);
     })
 
     describe("Scenario: Conference doesn't exist", () => {
@@ -67,7 +67,7 @@ describe("Change seats", () => {
         })
     })
 
-    describe("Scenario: Neverless than the number of booking", () => {
+    describe("Scenario: Never less than the number of booking", () => {
         const payload = {
             conferenceId: UnitConferences.conference2.props.id,
             seats: 80,
@@ -86,6 +86,22 @@ describe("Change seats", () => {
             }
 
             await expect(() => usecase.execute(payload)).rejects.toThrow("Never less than the number of bookings")
+        })
+    })
+
+    describe("Scenario: Happy path", () => {
+        const payload = {
+            conferenceId: UnitConferences.conference2.props.id,
+            seats: 80,
+            organizer: UnitUsers.alice,
+        }
+
+        it("should change the number of seats", async () => {
+            await usecase.execute(payload);
+
+            const updatedConference = await confRepository.findById(UnitConferences.conference2.props.id)
+
+            expect(updatedConference?.props.seats).toEqual(80)
         })
     })
 })
