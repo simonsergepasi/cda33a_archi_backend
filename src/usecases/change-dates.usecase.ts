@@ -16,7 +16,7 @@ interface ChangeDatesRequest {
 
 type ChangeDatesResponde = void
 
-export class ChangeDates implements IUsecase<ChangeDatesRequest, ChangeDatesResponde> {
+export class ChangeDatesUsecase implements IUsecase<ChangeDatesRequest, ChangeDatesResponde> {
 
     constructor(
         private readonly conferenceRepository: IConferenceRepository,

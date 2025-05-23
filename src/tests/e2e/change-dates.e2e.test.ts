@@ -3,7 +3,6 @@ import { Application } from 'express';
 import { TestApp } from "../test-app";
 import { E2eUsers } from "../seeds/e2e-users";
 import { E2eConferences } from '../seeds/e2e-conferences';
-import { MongoUser } from "../../repositories/mongodb/mongo-user.model";
 
 describe("Usecase: Change Dates", () => {
   let testApp: TestApp;

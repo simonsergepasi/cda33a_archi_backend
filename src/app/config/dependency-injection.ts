@@ -10,9 +10,12 @@ import { MongoUserRepository } from "../../repositories/mongodb/mongo-user-repos
 import { MongoUser } from "../../repositories/mongodb/mongo-user.model";
 import { JwtAuthenticator } from "../../services/jwt-authenticator";
 import { ChangeSeatUsecase } from "../../usecases/change-seat.usecase";
+import { ChangeDatesUsecase } from "../../usecases/change-dates.usecase";
 import { OrganizeConference } from "../../usecases/organize-conference.usecase";
 import { UUIDGenerator } from "../../utils/uuid-generator";
 import { config } from "./get-env";
+import { InMemoryMailer } from "../../utils/in-memory-mailer";
+
 
 export interface Dependencies {
     conferenceRepository: IConferenceRepository
@@ -22,6 +25,7 @@ export interface Dependencies {
     authenticator: IAuthenticator
     organizeConference: OrganizeConference
     changeSeats: ChangeSeatUsecase
+    changeDates: ChangeDatesUsecase
 }
 
 const container = createContainer<Dependencies>()
@@ -39,11 +43,13 @@ const userRepository = container.resolve('userRepository');
 const bookingRepository = container.resolve('bookingRepository');
 const idGenerator = container.resolve('idGenerator');
 
+const mailer = new InMemoryMailer();
 
 container.register({
     authenticator: asValue(new JwtAuthenticator(userRepository, config.secretKey)),
     organizeConference: asValue(new OrganizeConference(conferenceRepository, idGenerator)),
-    changeSeats: asValue(new ChangeSeatUsecase(conferenceRepository, bookingRepository))
+    changeSeats: asValue(new ChangeSeatUsecase(conferenceRepository, bookingRepository)),
+    changeDates: asValue(new ChangeDatesUsecase(conferenceRepository, mailer, bookingRepository, userRepository))
 })
 
 export default container;
