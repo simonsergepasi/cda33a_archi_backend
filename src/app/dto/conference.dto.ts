@@ -17,3 +17,9 @@ export class CreateConferenceDTO {
     @IsNotEmpty()
     endDate: Date
 }
+
+export class ChangeSeatsDTO {
+    @IsNotEmpty()
+    @IsNumber()
+    seats: number
+}

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../../entities/user.entity";
 import container from "../config/dependency-injection";
-import { CreateConferenceDTO } from "../dto/conference.dto";
+import { ChangeSeatsDTO, CreateConferenceDTO } from "../dto/conference.dto";
 import { RequestValidator } from "../utils/validate-requests";
 
 
@@ -23,3 +23,27 @@ export const organizeConference = async (req: Request, res: Response, next: Next
         next(error)
     }
 }
+
+export const changeSeats = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) : Promise<any> => {
+    try {
+        const { conferenceId } = req.params;
+        const {errors, input } = await RequestValidator(ChangeSeatsDTO, req.body);
+
+        if(errors) return res.jsonError(errors, 400)
+
+        await container.resolve('changeSeats').execute({
+            conferenceId,
+            seats: input.seats,
+            organizer: req.user as User
+        })
+
+        return res.jsonSuccess("Le nombre de places a bien ete mis a jour", 200)
+
+    } catch (error) {
+        next(error);
+    }
+};
