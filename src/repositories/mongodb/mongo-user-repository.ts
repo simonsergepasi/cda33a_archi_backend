@@ -24,6 +24,14 @@ class UserMapper {
 
 export class MongoUserRepository implements IUserRepository {
     constructor(private readonly model: Model<MongoUser.UserDocument>) {}
+    async findById(id: string): Promise<User | null> {
+        const doc = await this.model.findById(id).exec();
+        if (!doc) return null;
+
+        return new User({
+            id: doc._id.toString(), email: doc.email, password: doc.password
+        });
+    }
 
     async findByEmail(email: string): Promise<User | null> {
         const document = await this.model.findOne({email});
