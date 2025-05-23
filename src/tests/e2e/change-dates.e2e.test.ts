@@ -29,15 +29,18 @@ describe("Usecase: Change Dates", () => {
         const response = await request(app)
                             .put(`/conferences/${conferenceId}/seats`)
                             .set('Authorization', E2eUsers.john.createJwtAuthorization())
-                            .send({seats: 80})
-        
+                            .send({
+                            newStartDate: "2025-07-01T10:00:00.000Z",
+                            newEndDate: "2025-07-03T10:00:00.000Z"
+                            });
+
         expect(response.status).toEqual(200);
         
         const conferenceRepository = testApp.containerDI.resolve('conferenceRepository');
         const updatedConference = await conferenceRepository.findById(conferenceId);
 
         expect(updatedConference).toBeDefined();
-        expect(updatedConference?.props.seats).toEqual(80);
-
+        expect(updatedConference?.props.startDate.toISOString()).toEqual("2025-07-01T10:00:00.000Z");
+        expect(updatedConference?.props.endDate.toISOString()).toEqual("2025-07-03T10:00:00.000Z");
     })
 });
