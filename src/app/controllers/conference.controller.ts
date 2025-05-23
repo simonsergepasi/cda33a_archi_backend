@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../../entities/user.entity";
 import container from "../config/dependency-injection";
-import { ChangeDatesDTO, ChangeSeatsDTO, CreateConferenceDTO } from "../dto/conference.dto";
+import { BookSeatDTO, ChangeDatesDTO, ChangeSeatsDTO, CreateConferenceDTO } from "../dto/conference.dto";
 import { RequestValidator } from "../utils/validate-requests";
 
 
@@ -63,6 +63,30 @@ export const changeDates = async (
             conferenceId,
             startDate: new Date(input.newStartDate),
             endDate: new Date(input.newEndDate),
+            organizer: req.user as User
+        })
+
+        return res.jsonSuccess("Les dates ont bien ete mises a jour", 200)
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const bookSeat = async (
+    req: Request, 
+    res: Response, 
+    next: NextFunction
+) : Promise<any> => {
+    try {
+        const { conferenceId } = req.params;
+        const { errors, input } = await RequestValidator(BookSeatDTO, req.body);
+
+        if(errors) return res.jsonError(errors, 400)
+
+        await container.resolve('bookSeat').execute({
+            conferenceId,
+            seat: input.seat,
             organizer: req.user as User
         })
 

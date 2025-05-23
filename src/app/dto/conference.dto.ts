@@ -33,3 +33,9 @@ export class ChangeDatesDTO {
   @IsDateString()
   newEndDate: string;
 }
+
+export class BookSeatDTO {
+    @IsNotEmpty()
+    @IsNumber()
+    seat: number
+}

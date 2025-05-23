@@ -6,14 +6,14 @@ import { UnitBookings } from "../tests/seeds/unit-booking"
 import { UnitConferences } from "../tests/seeds/unit-conferences"
 import { UnitUsers } from "../tests/seeds/unit-users"
 import { InMemoryMailer } from "../utils/in-memory-mailer"
-import { ChangeDates } from "./change-dates.usecase"
+import { ChangeDatesUsecase } from "./change-dates.usecase"
 
 describe("Change Dates", () => {
     let conferenceRepository: InMemoryConferenceRepository
     let bookingRepository: InMemoryBookingRepository
     let userRepository: InMemoryUserRepository
     let mailer: InMemoryMailer
-    let usecase: ChangeDates
+    let usecase: ChangeDatesUsecase
 
 
     beforeEach(async () => {
@@ -21,7 +21,7 @@ describe("Change Dates", () => {
         mailer = new InMemoryMailer();
         bookingRepository = new InMemoryBookingRepository()
         userRepository = new InMemoryUserRepository()
-        usecase = new ChangeDates(
+        usecase = new ChangeDatesUsecase(
             conferenceRepository, 
             mailer,
             bookingRepository,

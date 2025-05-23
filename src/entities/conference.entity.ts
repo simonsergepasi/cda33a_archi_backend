@@ -8,6 +8,7 @@ export interface ConferenceProps {
     startDate: Date
     endDate: Date
     organizerId: string
+    bookedSeats: number[] 
 }
 
 export class Conference {
@@ -31,6 +32,13 @@ export class Conference {
 
     isOrganizer(user: User) {
         return this.props.organizerId === user.props.id
+    }
+
+    isSeatAvailable(seat: number): boolean {
+        return (
+            !this.props.bookedSeats.includes(seat) &&
+            this.props.bookedSeats.length < this.props.seats
+        );
     }
 
     update(data: Partial<ConferenceProps>) {

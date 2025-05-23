@@ -11,6 +11,7 @@ import { MongoUser } from "../../repositories/mongodb/mongo-user.model";
 import { JwtAuthenticator } from "../../services/jwt-authenticator";
 import { ChangeSeatUsecase } from "../../usecases/change-seat.usecase";
 import { ChangeDatesUsecase } from "../../usecases/change-dates.usecase";
+import { BookSeatUsecase } from "../../usecases/book-seat.usecase";
 import { OrganizeConference } from "../../usecases/organize-conference.usecase";
 import { UUIDGenerator } from "../../utils/uuid-generator";
 import { config } from "./get-env";
@@ -26,6 +27,7 @@ export interface Dependencies {
     organizeConference: OrganizeConference
     changeSeats: ChangeSeatUsecase
     changeDates: ChangeDatesUsecase
+    bookSeat: BookSeatUsecase
 }
 
 const container = createContainer<Dependencies>()
@@ -49,7 +51,8 @@ container.register({
     authenticator: asValue(new JwtAuthenticator(userRepository, config.secretKey)),
     organizeConference: asValue(new OrganizeConference(conferenceRepository, idGenerator)),
     changeSeats: asValue(new ChangeSeatUsecase(conferenceRepository, bookingRepository)),
-    changeDates: asValue(new ChangeDatesUsecase(conferenceRepository, mailer, bookingRepository, userRepository))
+    changeDates: asValue(new ChangeDatesUsecase(conferenceRepository, mailer, bookingRepository, userRepository)),
+    bookSeat: asValue(new BookSeatUsecase(conferenceRepository, bookingRepository))
 })
 
 export default container;
